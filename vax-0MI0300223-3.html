@@ -24,7 +24,13 @@
 			import * as VAX from "vax";
 
 			/* init */
+			var prevAlpha , prevBeta , prevGamma;
 			var alpha, beta, gamma, abs;
+			var dAlpha , dBeta , dGamma ;
+			prevAlpha = 0;
+			prevBeta = 0;
+			prevGamma = 0;
+			
 			VAX.init(animate);  //make stereo later
 			
 			/*device orientation */
@@ -38,6 +44,14 @@
 				beta = event.beta * Math.PI / 180;
 				gamma = event.gamma * Math.PI / 180;
 				abs = event.absolute;
+				
+				dAlpha = alpha - prevAlpha;
+				dBeta  = beta  - prevBeta;
+  				dGamma = gamma - prevGamma;
+				
+				prevAlpha = alpha;
+  				prevBeta  = beta;
+  				prevGamma = gamma;
 			}
 
 			/* cube and cones */
@@ -48,7 +62,7 @@
 			VAX.scene.add(cube);
 			
 			function animate(t){
-				VAX.camera.rotation.set( beta, alpha, gamma);
+				VAX.camera.rotate( dBeta, dAlpha, -prevGamma);
 			}
 		</script>
 	</body>
