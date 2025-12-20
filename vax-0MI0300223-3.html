@@ -62,6 +62,7 @@
 			VAX.scene.add(cube);
 			
 			function animate(t){
+				if ( VAX.camera.rotation.y + dAlpha >= Math.PI/2) dAlpha = 0;
 				VAX.camera.rotation.x += dBeta;
 				VAX.camera.rotation.y += dAlpha;
 				VAX.camera.rotation.z += -dGamma;
