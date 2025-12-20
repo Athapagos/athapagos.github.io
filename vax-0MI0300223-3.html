@@ -48,14 +48,14 @@
 			
 			function deviceOrientation(event)
 			{
-				alpha = event.alpha * Math.PI / 180;
-				beta = event.beta * Math.PI / 180;
-				gamma = event.gamma * Math.PI / 180;
+				alpha = event.alpha;
+				beta = event.beta ;
+				gamma = event.gamma;
 				abs = event.absolute;
 				
-				dAlpha = Math.floor(alpha - prevAlpha);
-				dBeta  = Math.floor(beta  - prevBeta);
-  				dGamma = Math.floor(gamma - prevGamma);
+				dAlpha = Math.floor(alpha - prevAlpha)  * Math.PI / 180;
+				dBeta  = Math.floor(beta  - prevBeta) * Math.PI / 180;
+  				dGamma = Math.floor(gamma - prevGamma) * Math.PI / 180;
 				
 				prevAlpha = alpha;
   				prevBeta  = beta;
