@@ -95,10 +95,14 @@
 			//VAX.scene.add(cube);
 			
 			function animate(t){
+				/*
 				if ( Math.abs(VAX.camera.rotation.x + dAlpha)  >= Math.PI/2) dAlpha = 0;
 				VAX.camera.rotation.y += dBeta;
 				THREE.MathUtils.clamp(VAX.camera.rotation.x + dAlpha , - Math.PI/2 + 0.01 , Math.PI/2 -0.01) ;
 				VAX.camera.rotation.z -= dGamma;
+				*/
+				VAX.camera.position.set ( 0, 500, 2000);
+				VAX.camera.lookAt( 0, 0, 0);
 			}
 		</script>
 	</body>
