@@ -37,9 +37,10 @@
 			var dAlpha = 0;
 			var dBeta = 0;
 			var dGamma = 0;
-			
+
+			var damp = 0.9;
 			VAX.init(animate);  //make stereo later
-			
+			VAX.camera.rotation.order = 'YXZ';
 			/*device orientation */
 			
 			window.addEventListener("deviceorientation", deviceOrientation, true);
@@ -52,9 +53,9 @@
 				gamma = event.gamma * Math.PI / 180;
 				abs = event.absolute;
 				
-				dAlpha = alpha - prevAlpha;
-				dBeta  = beta  - prevBeta;
-  				dGamma = gamma - prevGamma;
+				dAlpha = (alpha - prevAlpha) * damp;
+				dBeta  = (beta  - prevBeta) * damp;
+  				dGamma = (gamma - prevGamma) * damp;
 				
 				prevAlpha = alpha;
   				prevBeta  = beta;
@@ -69,9 +70,9 @@
 			VAX.scene.add(cube);
 			
 			function animate(t){
-				if ( Math.abs(VAX.camera.rotation.y + dAlpha)  >= Math.PI/2) dAlpha = 0;
+				if ( Math.abs(VAX.camera.rotation.x + dAlpha)  >= Math.PI/2) dAlpha = 0;
 				VAX.camera.rotation.y += dBeta;
-				VAX.camera.rotation.x += dAlpha;
+				THREE.MathUtils.clamp(VAX.camera.rotation.x + dAlpha , - Math.PI/2 + 0.01 , Math.PI/2 -0.01) ;
 				VAX.camera.rotation.z -= dGamma;
 			}
 		</script>
