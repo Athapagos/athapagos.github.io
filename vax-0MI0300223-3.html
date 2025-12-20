@@ -76,7 +76,7 @@
 				new THREE.MeshPhysicalMaterial({color: 'red'}),
 				new THREE.MeshPhysicalMaterial({color: 'blue'}),
 				new THREE.MeshPhysicalMaterial({color: 'pink'}),
-				new THREE.MeshPhysicalMaterial({color: 'white'}),
+				new THREE.MeshPhysicalMaterial({color: 'black'}),
 			]
 			
 			var conepSide = 20;
@@ -88,7 +88,7 @@
 				var y = Math.random() * 1000 - 500;
 				var MatType = Math.floor( Math.random() * coneCount);
 				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
-				cone.position.set( x , height, y);
+				cone.position.set( x , -height, y);
 				VAX.scene.add(cone);
 			}
 			
