@@ -53,9 +53,9 @@
 				gamma = event.gamma * Math.PI / 180;
 				abs = event.absolute;
 				
-				dAlpha = (alpha - prevAlpha) * damp;
-				dBeta  = (beta  - prevBeta) * damp;
-  				dGamma = (gamma - prevGamma) * damp;
+				dAlpha = Math.floor(alpha - prevAlpha);
+				dBeta  = Math.floor(beta  - prevBeta);
+  				dGamma = Math.floor(gamma - prevGamma);
 				
 				prevAlpha = alpha;
   				prevBeta  = beta;
@@ -63,10 +63,35 @@
 			}
 
 			/* cube and cones */
-			var cubeGeo = new THREE.BoxGeometry( 1000, 1000, 1000 );
-			var cubeMat = new THREE.MeshPhysicalMaterial({color: 'yellow' , side: THREE.BackSide, opacity: 0.2 });
+			var cubeSize = 1000;
+			
+			var cubeGeo = new THREE.BoxGeometry( cubeSize, cubeSize, cubeSize );
+			var cubeMat = new THREE.MeshPhysicalMaterial({color: 0xE8E8E8 , side: THREE.BackSide, opacity: 0.2 });
 			var cube = new THREE.Mesh(cubeGeo, cubeMat);
 
+			var coneCount = 5;
+			var coneGeo = new THREE.ConeGeometry(10, 20, 32, 1);
+			var coneMats = [
+				new THREE.MeshPhysicalMaterial({color: 'yellow'}),
+				new THREE.MeshPhysicalMaterial({color: 'red'}),
+				new THREE.MeshPhysicalMaterial({color: 'blue'}),
+				new THREE.MeshPhysicalMaterial({color: 'pink'}),
+				new THREE.MeshPhysicalMaterial({color: 'white'}),
+			]
+			
+			var conepSide = 20;
+			
+			var height = cubeSize/2 ;
+			for( var i = 0 ; i < conepSize; i++) //y is constant and negative
+			{
+				var x= Math.rand() * 1000 - 500;
+				var y = Math.rand() * 1000 - 500;
+				var MatType = Math.floor( Math.rand() * coneCount);
+				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
+				cone.position.set( x , height, y);
+				VAX.scene.add(cone);
+			}
+			
 			VAX.scene.add(cube);
 			
 			function animate(t){
