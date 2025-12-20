@@ -18,11 +18,6 @@
 	</head>
 	
 	<body>
-		<h3>alpha = <span id="alpha"></span></h3>
-		<h3>beta = <span id="beta"></span></h3>
-		<h3>gamma = <span id="gamma"></span></h3>
-		<h3>absolute = <span id="absolute"></span></h3>
-
 		<script type="module">
 			/* imports */
 			import * as THREE from "three";
@@ -54,8 +49,9 @@
 			
 			function animate(t){
 				VAX.camera.rotation.set( 
-					document.getElementById('alpha').innerHTML,
+					
 					document.getElementById('beta').innerHTML,
+					document.getElementById('alpha').innerHTML,
 					document.getElementById('gamma').innerHTML
 				);
 			}
