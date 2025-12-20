@@ -6,7 +6,15 @@
 		<meta charset="utf-8">
 		
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		
+		<script type="importmap">
+		  {
+			"imports": {
+			  "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+			  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+			  "vax": "https://boytchev.github.io/CourseVAX/lib/vax.js"
+			}
+		  }
+		</script>
 	</head>
 	
 	<body>
@@ -15,12 +23,20 @@
 		<h3>gamma = <span id="gamma"></span></h3>
 		<h3>absolute = <span id="absolute"></span></h3>
 
-		<script>
+		<script type="module">
+			/* imports */
+			import * as THREE from "three";
+			import * as VAX from "vax";
 
-			// слушаме за събитието на ориентацията на устройство
+			/* init */
+			
+			VAX.init(animate); //make stereo later
+			
+			/*device orientation */
+			
 			window.addEventListener("deviceorientation", deviceOrientation, true);
-
-			// функция, която показва данните на ориентацията
+			
+			
 			function deviceOrientation(event)
 			{
 				document.getElementById('alpha').innerHTML = event.alpha;
@@ -28,7 +44,20 @@
 				document.getElementById('gamma').innerHTML = event.gamma;
 				document.getElementById('absolute').innerHTML = event.absolute;
 			}
+
+			/* cube and cones */
+			var cubeGeo = new THREE.BoxGeometry( 1000, 1000, 1000 );
+			var cubeMat = new THREE.MeshPhysicalMaterial({color: 'yellow' , side: THREE.BackSide, opacity: 0.2 });
+			var cube = new THREE.Mesh(cubeGeo, cubeMat);
+
+			VAX.scene.add(cube);
 			
+			function animation(t){
+				VAX.camera.rotation.set( 
+					document.getElementById('alpha').innerHTML,
+					document.getElementById('beta').innerHTML = event.beta,
+					document.getElementById('gamma').innerHTML = event.gamma,
+			}
 		</script>
 	</body>
 </html>
