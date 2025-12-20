@@ -70,9 +70,9 @@
 			
 			function animate(t){
 				if ( Math.abs(VAX.camera.rotation.y + dAlpha)  >= Math.PI/2) dAlpha = 0;
-				VAX.camera.rotation.x += dBeta;
-				VAX.camera.rotation.y += dAlpha;
-				VAX.camera.rotation.z += -dGamma;
+				VAX.camera.rotation.y += dBeta;
+				VAX.camera.rotation.x += dAlpha;
+				VAX.camera.rotation.z -= dGamma;
 			}
 		</script>
 	</body>
