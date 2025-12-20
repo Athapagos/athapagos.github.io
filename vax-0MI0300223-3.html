@@ -88,7 +88,7 @@
 				var y = Math.random() * 1000 - 500;
 				var MatType = Math.floor( Math.random() * coneCount);
 				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
-				cone.position.set( x , -height, y);
+				cone.position.set( x , 0, y);
 				VAX.scene.add(cone);
 			}
 			
