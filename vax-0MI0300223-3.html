@@ -37,7 +37,7 @@
 			const Xaxis = new THREE.Vector3(1, 0, 0);
 			const Zaxis = new THREE.Vector3(0, 0, 1);
 
-			VAX.init(animate);  //make stereo later
+			VAX.initParallax(animate); 
 			VAX.camera.matrixAutoUpdate = false;
 			/*device orientation */
 			
@@ -72,7 +72,7 @@
 			var conepSide = 100;
 			
 			var height = cubeSize/2 - 100 ;
-			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			for( var i = 0 ; i < conepSide; i++) 
 			{
 				var x= Math.random() * cubeSize - cubeSize /2 ;
 				var y = Math.random() * cubeSize - cubeSize /2;
@@ -81,7 +81,7 @@
 				cone.position.set( x , -height, y);
 				VAX.scene.add(cone);
 			}
-			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			for( var i = 0 ; i < conepSide; i++) 
 			{
 				var x= Math.random() * cubeSize - cubeSize /2;
 				var y = Math.random() * cubeSize - cubeSize /2;
@@ -90,7 +90,7 @@
 				cone.position.set( -height , x, y);
 				VAX.scene.add(cone);
 			}
-			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			for( var i = 0 ; i < conepSide; i++)
 			{
 				var x= Math.random() * cubeSize - cubeSize /2;
 				var y = Math.random() * cubeSize - cubeSize /2;
@@ -99,7 +99,7 @@
 				cone.position.set( x , y, -height);
 				VAX.scene.add(cone);
 			}
-			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			for( var i = 0 ; i < conepSide; i++) 
 			{
 				var x= Math.random()* cubeSize - cubeSize /2;
 				var y = Math.random() * cubeSize - cubeSize /2;
@@ -108,7 +108,7 @@
 				cone.position.set( x , height, y);
 				VAX.scene.add(cone);
 			}
-			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			for( var i = 0 ; i < conepSide; i++)
 			{
 				var x= Math.random() * cubeSize - cubeSize /2;
 				var y = Math.random() * cubeSize - cubeSize /2;
@@ -117,7 +117,7 @@
 				cone.position.set( height , x, y);
 				VAX.scene.add(cone);
 			}
-			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			for( var i = 0 ; i < conepSide; i++) 
 			{
 				var x= Math.random() * cubeSize - cubeSize /2;
 				var y = Math.random() * cubeSize - cubeSize /2;
@@ -142,7 +142,7 @@
 				
 				
 				if (globalUP.lengthSq() < 0.01) {
-   		 			globalUP.set(0, 1, 0); // fallback
+   		 			globalUP.set(0, 1, 0); 
   				} else {
     				globalUP.normalize();
  				}
