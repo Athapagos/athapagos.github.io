@@ -25,18 +25,10 @@
 
 			/* init */
 			
-			var prevAlpha = 0;
-			var prevBeta = 0;
-			var prevGamma = 0;
-				
 			var alpha = 0;
 			var beta = 0;
 			var gamma = 0;
 			var abs = 0;
-
-			var dAlpha = 0;
-			var dBeta = 0;
-			var dGamma = 0;
 
 			var damp = 0.9;
 			VAX.init(animate);  //make stereo later
@@ -44,7 +36,7 @@
 			/*device orientation */
 			
 			window.addEventListener("deviceorientation", deviceOrientation, true);
-			
+			var orientationmatrix = new THREE.Matrix4();
 			
 			function deviceOrientation(event)
 			{
@@ -52,14 +44,9 @@
 				beta = event.beta ;
 				gamma = event.gamma;
 				abs = event.absolute;
+				orientationmatrix.makeRotationFromEuler( beta, alpha, -gamma);
+				VAX.camera.rotation.setRotationFromMatrix(orientationmatrix);
 				
-				dAlpha = (alpha - prevAlpha)  * Math.PI / 180;
-				dBeta  = (beta  - prevBeta) * Math.PI / 180;
-  				dGamma = (gamma - prevGamma) * Math.PI / 180;
-				
-				prevAlpha = alpha;
-  				prevBeta  = beta;
-  				prevGamma = gamma;
 			}
 
 			/* cube and cones */
@@ -96,10 +83,8 @@
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
-				if ( Math.abs(VAX.camera.rotation.x + dAlpha)  >= Math.PI/2) dAlpha = 0;
-				VAX.camera.rotation.y += dBeta;
-				VAX.camera.rotation.x = THREE.MathUtils.clamp(VAX.camera.rotation.x + dAlpha , - Math.PI/2 + 0.01 , Math.PI/2 -0.01) ;
-				VAX.camera.rotation.z = 0;
+				//orientationmatrix.makeRotationFromEuler( beta, alpha, -gamma);
+				
 				
 			}
 		</script>
