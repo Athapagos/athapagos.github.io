@@ -25,6 +25,7 @@
 
 			/* init */
 			
+			
 			var alpha = 0, beta =0 , gamma = 0;
 
 			const mYaw   = new THREE.Matrix4();
@@ -37,7 +38,7 @@
 			const Zaxis = new THREE.Vector3(0, 0, 1);
 
 			VAX.init(animate);  //make stereo later
-			VAX.camera.rotation.order = 'YXZ';
+			VAX.camera.matrixAutoUpdate = false;
 			/*device orientation */
 			
 			window.addEventListener("deviceorientation", deviceOrientation, true);
