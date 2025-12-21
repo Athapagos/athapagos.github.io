@@ -86,9 +86,9 @@
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
-				mYaw.makeRotationAxis(AXIS_Y, alpha);
-  				mPitch.makeRotationAxis(AXIS_X, beta);
-  				mRoll.makeRotationAxis(AXIS_Z, -gamma);	
+				mYaw.makeRotationAxis(Yaxis, alpha);
+  				mPitch.makeRotationAxis(Xaxis, beta);
+  				mRoll.makeRotationAxis(Zaxis, -gamma);	
 
 				mFinal.identity();
  			 	mFinal.multiply(mYaw);
