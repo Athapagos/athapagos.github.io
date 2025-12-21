@@ -49,6 +49,7 @@
 				alpha =  THREE.MathUtils.degToRad(event.alpha || 0) ;
 				beta =  THREE.MathUtils.degToRad(event.beta || 0) ;
 				gamma =  THREE.MathUtils.degToRad(event.gamma || 0) ;
+				
 			}
 
 			/* cube and cones */
@@ -68,9 +69,9 @@
 				new THREE.MeshBasicMaterial({color: 'black'}),
 			]
 			
-			var conepSide = 20;
+			var conepSide = 100;
 			
-			var height = cubeSize/2 ;
+			var height = cubeSize/2 - 100 ;
 			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
 			{
 				var x= Math.random() * 1000 - 500;
@@ -125,7 +126,7 @@
 				cone.position.set( x , y, height);
 				VAX.scene.add(cone);
 			}
-			//VAX.scene.add(cube);
+			VAX.scene.add(cube);
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
@@ -134,9 +135,11 @@
   				mRoll.makeRotationAxis(Zaxis, -gamma);	
 
 				mFinal.identity();
- 			 	mFinal.multiply(mYaw);
+ 			 	
  	 			mFinal.multiply(mPitch);
   				mFinal.multiply(mRoll);
+				mFinal.multiply(mYaw);
+				
 				VAX.camera.matrix.copy(mFinal);
   				VAX.camera.matrixWorldNeedsUpdate = true;
 			}
