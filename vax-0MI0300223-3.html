@@ -25,12 +25,17 @@
 
 			/* init */
 			
-			var alpha = 0;
-			var beta = 0;
-			var gamma = 0;
-			var abs = 0;
+			var alpha = 0, beta =0 , gamma = 0;
 
-			var damp = 0.9;
+			const mYaw   = new THREE.Matrix4();
+			const mPitch = new THREE.Matrix4();
+			const mRoll  = new THREE.Matrix4();
+			const mFinal = new THREE.Matrix4();
+			
+			const Yaxis = new THREE.Vector3(0, 1, 0);
+			const Xaxis = new THREE.Vector3(1, 0, 0);
+			const Zaxis = new THREE.Vector3(0, 0, 1);
+
 			VAX.init(animate);  //make stereo later
 			VAX.camera.rotation.order = 'YXZ';
 			/*device orientation */
@@ -40,9 +45,9 @@
 			
 			function deviceOrientation(event)
 			{
-				alpha = event.alpha;
-				beta = event.beta ;
-				gamma = event.gamma;
+				alpha =  THREE.MathUtils.degToRad(event.alpha || 0) ;
+				beta =  THREE.MathUtils.degToRad(event.beta || 0) ;
+				gamma =  THREE.MathUtils.degToRad(event.gamma || 0) ;
 				abs = event.absolute;
 				
 			}
@@ -81,9 +86,16 @@
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
-				orientationmatrix.makeRotationFromEuler( beta, alpha, -gamma);
-				console.log("orientationmatrix: " , orientationmatrix);
-				VAX.camera.setRotationFromMatrix(orientationmatrix);		
+				mYaw.makeRotationAxis(AXIS_Y, alpha);
+  				mPitch.makeRotationAxis(AXIS_X, beta);
+  				mRoll.makeRotationAxis(AXIS_Z, -gamma);	
+
+				mFinal.identity();
+ 			 	mFinal.multiply(mYaw);
+ 	 			mFinal.multiply(mPitch);
+  				mFinal.multiply(mRoll);
+				VAX.camera.matrix.copy(mFinal);
+  				VAX.camera.matrixWorldNeedsUpdate = true;
 			}
 		</script>
 	</body>
