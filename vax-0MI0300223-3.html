@@ -53,14 +53,14 @@
 			}
 
 			/* cube and cones */
-			var cubeSize = 1500;
+			var cubeSize = 1000;
 			
 			var cubeGeo = new THREE.BoxGeometry( cubeSize, cubeSize, cubeSize );
 			var cubeMat = new THREE.MeshPhysicalMaterial({color: 0xE8E8E8 , side: THREE.BackSide, opacity: 0.2 });
 			var cube = new THREE.Mesh(cubeGeo, cubeMat);
 
 			var coneCount = 5;
-			var coneGeo = new THREE.ConeGeometry(50, 200, 32, 1);
+			var coneGeo = new THREE.ConeGeometry(25, 100, 32, 1);
 			var coneMats = [
 				new THREE.MeshBasicMaterial({color: 'yellow'}),
 				new THREE.MeshBasicMaterial({color: 'red'}),
@@ -127,7 +127,6 @@
 				VAX.scene.add(cone);
 			}
 			VAX.scene.add(cube);
-			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
 				
