@@ -130,14 +130,17 @@
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
-				mYaw.makeRotationAxis(Yaxis, alpha);
-  				mPitch.makeRotationAxis(Xaxis, beta);
+				
+  				mPitch.makeRotationAxis(Xaxis, beta - Math.PI/2);
+				
   				mRoll.makeRotationAxis(Zaxis, -gamma);	
 
 				mFinal.identity();
- 			 	
  	 			mFinal.multiply(mPitch);
   				mFinal.multiply(mRoll);
+
+				var worldUp = new THREE.Vector3(0, 1, 0).applyMatrix4(mFinal);
+				mYaw.makeRotationAxis(worldUp.normalize(), alpha);
 				mFinal.multiply(mYaw);
 				
 				VAX.camera.matrix.copy(mFinal);
