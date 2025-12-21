@@ -28,22 +28,28 @@
 			
 			var alpha = 0, beta =0 , gamma = 0;
 
-			const mYaw   = new THREE.Matrix4();
-			const mPitch = new THREE.Matrix4();
-			const mRoll  = new THREE.Matrix4();
-			const mFinal = new THREE.Matrix4();
+			var YawMatrix   = new THREE.Matrix4();
+			var PitchMatrix = new THREE.Matrix4();
+			var RollMtrix  = new THREE.Matrix4();
+			var FinalMatrix = new THREE.Matrix4();
+			
+			var ScreenMatrix = new THREE.Matrix4();
 			
 			const Yaxis = new THREE.Vector3(0, 1, 0);
 			const Xaxis = new THREE.Vector3(1, 0, 0);
 			const Zaxis = new THREE.Vector3(0, 0, 1);
 
+			var screenori = 0;
 			VAX.initParallax(animate); 
 			VAX.camera.matrixAutoUpdate = false;
 			/*device orientation */
 			
 			window.addEventListener("deviceorientation", deviceOrientation, true);
-			var orientationmatrix = new THREE.Matrix4();
-			
+			window.addEventListener("change", screenchange, true);
+			function screenchange(event)
+			{
+				screenori = THREE.MathUtils.degToRad(screen.orientation.angle  || 0) ;
+			}
 			function deviceOrientation(event)
 			{
 				alpha =  THREE.MathUtils.degToRad(event.alpha || 0) ;
@@ -129,16 +135,20 @@
 			VAX.scene.add(cube);
 			
 			function animate(t){
-				
-  				mPitch.makeRotationAxis(Xaxis, beta - Math.PI/2);
-				
-  				mRoll.makeRotationAxis(Zaxis, -gamma);	
 
-				mFinal.identity();
- 	 			mFinal.multiply(mPitch);
-  				mFinal.multiply(mRoll);
+				ScreenMatrix.makeRotationAxis(Zaxis, -screenori);
+				
+  				PitchMatrix.makeRotationAxis(Xaxis, beta - Math.PI/2);
+				
+  				RollMatrix.makeRotationAxis(Zaxis, -gamma);	
 
-				var globalUP = new THREE.Vector3(0, 1, 0).applyMatrix4(mFinal);
+				FinalMatrix.identity();
+				
+				FinalMatrix.multiply(ScreenMatrix);
+ 	 			FinalMatrix.multiply(PitchMatrix);
+  				FinalMatrix.multiply(RollMatrix);
+
+				var globalUP = new THREE.Vector3(0, 1, 0).applyMatrix4(FinalMatrix);
 				
 				
 				if (globalUP.lengthSq() < 0.01) {
@@ -147,9 +157,9 @@
     				globalUP.normalize();
  				}
 				
-				mYaw.makeRotationAxis(globalUP, alpha);
-				mFinal.multiply(mYaw);
-				VAX.camera.matrix.copy(mFinal);
+				YawMatrix.makeRotationAxis(globalUP, alpha);
+				FinalMatrix.multiply(YawMatrix);
+				VAX.camera.matrix.copy(FinalMatrix);
   				VAX.camera.matrixWorldNeedsUpdate = true;
 			}
 		</script>
