@@ -80,7 +80,51 @@
 				cone.position.set( x , -height, y);
 				VAX.scene.add(cone);
 			}
-			
+			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			{
+				var x= Math.random() * 1000 - 500;
+				var y = Math.random() * 1000 - 500;
+				var MatType = Math.floor( Math.random() * coneCount);
+				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
+				cone.position.set( -height , x, y);
+				VAX.scene.add(cone);
+			}
+			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			{
+				var x= Math.random() * 1000 - 500;
+				var y = Math.random() * 1000 - 500;
+				var MatType = Math.floor( Math.random() * coneCount);
+				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
+				cone.position.set( x , y, -height);
+				VAX.scene.add(cone);
+			}
+			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			{
+				var x= Math.random() * 1000 - 500;
+				var y = Math.random() * 1000 - 500;
+				var MatType = Math.floor( Math.random() * coneCount);
+				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
+				cone.position.set( x , height, y);
+				VAX.scene.add(cone);
+			}
+			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			{
+				var x= Math.random() * 1000 - 500;
+				var y = Math.random() * 1000 - 500;
+				var MatType = Math.floor( Math.random() * coneCount);
+				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
+				cone.position.set( height , x, y);
+				VAX.scene.add(cone);
+			}
+			for( var i = 0 ; i < conepSide; i++) //y is constant and negative
+			{
+				var x= Math.random() * 1000 - 500;
+				var y = Math.random() * 1000 - 500;
+				var MatType = Math.floor( Math.random() * coneCount);
+				var cone = new THREE.Mesh(coneGeo, coneMats[MatType]);
+				cone.position.set( x , y, height);
+				VAX.scene.add(cone);
+			}
 			//VAX.scene.add(cube);
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
