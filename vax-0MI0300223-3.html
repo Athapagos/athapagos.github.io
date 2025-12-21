@@ -44,8 +44,6 @@
 				beta = event.beta ;
 				gamma = event.gamma;
 				abs = event.absolute;
-				orientationmatrix.makeRotationFromEuler( beta, alpha, -gamma);
-				VAX.camera.rotation.setRotationFromMatrix(orientationmatrix);
 				
 			}
 
@@ -83,9 +81,8 @@
 			VAX.scene.add(new THREE.AxesHelper(200));
 			
 			function animate(t){
-				//orientationmatrix.makeRotationFromEuler( beta, alpha, -gamma);
-				
-				
+				orientationmatrix.makeRotationFromEuler( beta, alpha, -gamma);
+				VAX.camera.rotation.setRotationFromMatrix(orientationmatrix);		
 			}
 		</script>
 	</body>
