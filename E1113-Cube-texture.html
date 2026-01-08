@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>E1113: Кубична текстура</title>
+		<meta charset="utf-8">
+		
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		
+		<script type="importmap">
+		  {
+			"imports": {
+			  "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+			  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+			  "vax": "https://boytchev.github.io/CourseVAX/lib/vax.js"
+			}
+		  }
+		</script>
+	</head>
+	
+	<body>
+		<script type="module">
+			
+			
+			
+			import * as THREE from "three";
+			import * as VAX from "vax";
+
+			VAX.init(animate);
+
+			VAX.camera.fov = 30;
+			VAX.camera.updateProjectionMatrix();
+			VAX.camera.position.set(0,0,0);
+			VAX.scene.background = new THREE.CubeTextureLoader().load([
+						'humus/posx.jpg', 'humus/negx.jpg',
+						'humus/posy.jpg', 'humus/negy.jpg',
+						'humus/posz.jpg', 'humus/negz.jpg']);
+			VAX.scene.background.colorSpace = THREE.LinearSRGBColorSpace;
+			
+			var alpha, beta, gamma, absolute;
+			// слушаме за събитието на ориентацията на устройство
+			window.addEventListener("deviceorientation", deviceOrientation, true);
+
+			// функция, която показва данните на ориентацията
+			function deviceOrientation(event)
+			{
+				alpha = event.alpha.toFixed(1);
+				beta = event.beta.toFixed(1);
+				gamma = event.gamma.toFixed(1);
+			}
+			var objects = [];
+			function updateCameraOrientation() {
+			// Pull orientation data from window.orientationGlobal if available
+					const yawRad = THREE.MathUtils.degToRad(alpha);
+					const pitchRad = THREE.MathUtils.degToRad(beta);
+					const rollRad = THREE.MathUtils.degToRad(gamma);
+  
+					// Determine the screen orientation (0, 90, 180, 270 degrees)
+					const screenOrientationDeg = window.orientation || 0;
+					const screenOrientationRad = THREE.MathUtils.degToRad(screenOrientationDeg);
+  
+					// Adjust yaw based on screen orientation
+					const adjustedYawRad = yawRad - screenOrientationRad;
+	
+					// Create quaternions for each rotation
+					const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
+						new THREE.Vector3(0, 1, 0), // Y-axis
+						adjustedYawRad
+					);
+					const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
+						new THREE.Vector3(1, 0, 0), // X-axis
+						pitchRad
+					);
+					const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
+						new THREE.Vector3(0, 0, 1), // Z-axis
+						-rollRad
+					);
+  
+					// Combine the quaternions: Yaw * Pitch * Roll
+					const deviceQuaternion = new THREE.Quaternion()
+						.multiply(quaternionYaw)
+						.multiply(quaternionPitch)
+						.multiply(quaternionRoll);
+  
+					// Reference Quaternion: Rotate -90 degrees around X-axis to align device frame with Three.js frame
+					const referenceQuaternion = new THREE.Quaternion().setFromEuler(
+						new THREE.Euler(-Math.PI / 2, 0, 0, 'YXZ') // -90 degrees around X-axis
+					);
+  
+					// Combine Device Quaternion with Reference Quaternion
+					const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion);
+  
+					// Apply the final quaternion to the camera
+					VAX.camera.quaternion.copy(finalQuaternion);
+  
+					// Optional: Log final quaternion for debugging
+					console.log("Final Quaternion: ${finalQuaternion.x}, ${finalQuaternion.y}, ${finalQuaternion.z}, ${finalQuaternion.w}");
+				}
+			const material = new THREE.MeshPhysicalMaterial({
+				roughness: 0.15,
+				transmission: 1,
+				thickness: 100
+			});
+			
+			const geometry = new THREE.TorusKnotGeometry(
+				18,
+				4,
+				172,
+				19, 
+				4,
+				5
+			);
+			var distance = 800;
+			var ObjCount = 60;
+			for( var i = 0; i < ObjCount; i++){
+				var omega = (i / ObjCount) * (Math.PI*2);  
+				const refractiveObj = new THREE.Mesh(geometry, material);
+				refractiveObj.position.set( distance * Math.sin(omega), Math.floor(Math.random()*400 - 200) , distance * Math.cos( omega) );
+				objects.push(refractiveObj);
+				VAX.scene.add(refractiveObj);
+			}
+			
+			function animate(t)
+			{
+			//	controls.update();
+				for(var i =0; i< ObjCount; i++){
+					objects[i].rotation.set( 0, t/2 , 0);
+				}
+				updateCameraOrientation()
+			}
+			
+		</script>	
+	</body>
+</html>
+
+
