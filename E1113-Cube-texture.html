@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>E1113: Кубична текстура</title>
+		<title>Test 3</title>
 		<meta charset="utf-8">
 		
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -19,9 +19,10 @@
 	</head>
 	
 	<body>
-		<script type="module">
+		<script type="module"> 
+			
 			import * as THREE from "three";
-			import * as VAX from "vax";
+			import * as VAX from "vax"; // Да се гледа в портретен режим, нямам време да оправям. 
 
 			VAX.init(animate);
 
@@ -34,16 +35,18 @@
 						'humus/posz.jpg', 'humus/negz.jpg']);
 			VAX.scene.background.colorSpace = THREE.LinearSRGBColorSpace;
 			
-			var alpha, beta, gamma, absolute;
+			var alpha , beta , gamma, absolute;
+			
 			window.addEventListener("deviceorientation", deviceOrientation, true);
-
 
 			function deviceOrientation(event)
 			{
+				console.log(event);
 				alpha = event.alpha.toFixed(1);
 				beta = event.beta.toFixed(1);
 				gamma = event.gamma.toFixed(1);
 			}
+			
 			var objects = [];
 			function updateCameraOrientation() {
 				const yawRad = THREE.MathUtils.degToRad(alpha);
@@ -55,20 +58,19 @@
 				const screenOrientationRad = THREE.MathUtils.degToRad(screenOrientationDeg);
 
 				const adjustedYawRad = yawRad - screenOrientationRad; 
-				const adjustedPitchRad = pitchRad - screenOrientationRad; 
 				const adjustedRowRad = rollRad - screenOrientationRad;
 
 				const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
 					new THREE.Vector3(0, 1, 0), // Y-axis
-					adjustedYawRad 
+					yawRad 
 				); 
 				const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
 					new THREE.Vector3(1, 0, 0), // X-axis
-					adjustedPitchRad 
+					pitchRad 
 				);
 				const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
 					new THREE.Vector3(0, 0, 1), //Z-axis
-					-adjustedRowRad
+					-rollRad
 				);
 
 				const deviceQuaternion = new THREE.Quaternion()
