@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 	<head>
@@ -20,9 +20,6 @@
 	
 	<body>
 		<script type="module">
-			
-			
-			
 			import * as THREE from "three";
 			import * as VAX from "vax";
 
@@ -38,10 +35,9 @@
 			VAX.scene.background.colorSpace = THREE.LinearSRGBColorSpace;
 			
 			var alpha, beta, gamma, absolute;
-			// слушаме за събитието на ориентацията на устройство
 			window.addEventListener("deviceorientation", deviceOrientation, true);
 
-			// функция, която показва данните на ориентацията
+
 			function deviceOrientation(event)
 			{
 				alpha = event.alpha.toFixed(1);
@@ -50,52 +46,44 @@
 			}
 			var objects = [];
 			function updateCameraOrientation() {
-			// Pull orientation data from window.orientationGlobal if available
-					const yawRad = THREE.MathUtils.degToRad(alpha);
-					const pitchRad = THREE.MathUtils.degToRad(beta);
-					const rollRad = THREE.MathUtils.degToRad(gamma);
-  
-					// Determine the screen orientation (0, 90, 180, 270 degrees)
-					const screenOrientationDeg = window.orientation || 0;
-					const screenOrientationRad = THREE.MathUtils.degToRad(screenOrientationDeg);
-  
-					// Adjust yaw based on screen orientation
-					const adjustedYawRad = yawRad - screenOrientationRad;
-	
-					// Create quaternions for each rotation
-					const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
-						new THREE.Vector3(0, 1, 0), // Y-axis
-						adjustedYawRad
-					);
-					const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
-						new THREE.Vector3(1, 0, 0), // X-axis
-						pitchRad
-					);
-					const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
-						new THREE.Vector3(0, 0, 1), // Z-axis
-						-rollRad
-					);
-  
-					// Combine the quaternions: Yaw * Pitch * Roll
-					const deviceQuaternion = new THREE.Quaternion()
-						.multiply(quaternionYaw)
-						.multiply(quaternionPitch)
-						.multiply(quaternionRoll);
-  
-					// Reference Quaternion: Rotate -90 degrees around X-axis to align device frame with Three.js frame
-					const referenceQuaternion = new THREE.Quaternion().setFromEuler(
-						new THREE.Euler(-Math.PI / 2, 0, 0, 'YXZ') // -90 degrees around X-axis
-					);
-  
-					// Combine Device Quaternion with Reference Quaternion
-					const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion);
-  
-					// Apply the final quaternion to the camera
-					VAX.camera.quaternion.copy(finalQuaternion);
-  
-					// Optional: Log final quaternion for debugging
-					console.log("Final Quaternion: ${finalQuaternion.x}, ${finalQuaternion.y}, ${finalQuaternion.z}, ${finalQuaternion.w}");
-				}
+				const yawRad = THREE.MathUtils.degToRad(alpha);
+				const pitchRad = THREE.MathUtils.degToRad(beta);
+				const rollRad = THREE.MathUtils.degToRad(gamma);
+
+
+				const screenOrientationDeg = window.orientation || 0;
+				const screenOrientationRad = THREE.MathUtils.degToRad(screenOrientationDeg);
+
+
+				const adjustedPitchRad = pitchRad - screenOrientationRad; //adjustedYawRad og
+
+
+				const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
+					new THREE.Vector3(0, 1, 0), // Y-axis
+					yawRad //og yawRad
+				); 
+				const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
+					new THREE.Vector3(1, 0, 0), // X-axis
+					adjustedPitchRad  //pitchRad
+				);
+				const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
+					new THREE.Vector3(0, 0, 1), // Z-axis
+					-rollRad
+				);
+
+				const deviceQuaternion = new THREE.Quaternion()
+					.multiply(quaternionYaw)
+					.multiply(quaternionPitch)
+					.multiply(quaternionRoll);
+
+				const referenceQuaternion = new THREE.Quaternion().setFromEuler(
+					new THREE.Euler(-Math.PI / 2, 0, 0, 'YXZ') 
+				);
+
+				const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion);
+
+				VAX.camera.quaternion.copy(finalQuaternion);
+			}
 			const material = new THREE.MeshPhysicalMaterial({
 				roughness: 0.15,
 				transmission: 1,
@@ -122,7 +110,6 @@
 			
 			function animate(t)
 			{
-			//	controls.update();
 				for(var i =0; i< ObjCount; i++){
 					objects[i].rotation.set( 0, t/2 , 0);
 				}
