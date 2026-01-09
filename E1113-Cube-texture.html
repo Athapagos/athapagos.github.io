@@ -57,21 +57,17 @@
 				const screenOrientationDeg = window.orientation || 0;
 				const screenOrientationRad = THREE.MathUtils.degToRad(screenOrientationDeg);
 
-				const adjustedYawRad = yawRad - screenOrientationRad; 
-				const adjustedPitchRad = pitchRad + screenOrientationRad;
-				const adjustedRollRad = rollRad - screenOrientationRad;
-
 				const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
 					new THREE.Vector3(0, 1, 0), // Y-axis 0,1,0
-					adjustedYawRad 
+					yawRad 
 				); 
 				const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
 					new THREE.Vector3(1, 0, 0), // X-axis 1,0,0
-					adjustedPitchRad 
+					pitchRad 
 				);
 				const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
 					new THREE.Vector3(0, 0, 1), //Z-axis  0,01
-					-adjustedRollRad
+					-rollRad
 				);
 
 				const deviceQuaternion = new THREE.Quaternion()
@@ -82,9 +78,13 @@
 				const referenceQuaternion = new THREE.Quaternion().setFromEuler(
 					new THREE.Euler(-Math.PI / 2, 0, 0, 'YXZ') 
 				);
-
-				const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion);
 				
+				const screenQuaternion = new THREE.Quaternion().setFromAxisAngle(
+   					new THREE.Vector3(0, 0, 1),
+    				-screenOrientationRad
+  				);
+				const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion).multiplu(screenQuaternion);
+
 				VAX.camera.quaternion.copy(finalQuaternion);
 			}
 			const material = new THREE.MeshPhysicalMaterial({
@@ -122,6 +122,7 @@
 		</script>	
 	</body>
 </html>
+
 
 
 
