@@ -42,12 +42,9 @@
 			function deviceOrientation(event)
 			{
 				console.log(event);
-				//alpha = event.alpha.toFixed(1); temp because browser shit
-				//beta = event.beta.toFixed(1);
-				//gamma = event.gamma.toFixed(1);
-				alpha = 0;
-				beta =0;
-				gamma = 0;
+				alpha = event.alpha.toFixed(1); temp because browser shit
+				beta = event.beta.toFixed(1);
+				gamma = event.gamma.toFixed(1);
 			}
 			
 			var objects = [];
@@ -87,7 +84,7 @@
     				-screenOrientationRad
   				);
 				const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion);
-				const finalfinalQuaternion.multiply(screenQuaternion);
+				const finalfinalQuaternion = finalQuaternion.multiply(screenQuaternion);
 
 				VAX.camera.quaternion.copy(finalfinalQuaternion);
 			}
@@ -126,6 +123,7 @@
 		</script>	
 	</body>
 </html>
+
 
 
 
