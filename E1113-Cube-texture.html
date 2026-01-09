@@ -61,15 +61,15 @@
 				//const adjustedRowRad = rollRad - screenOrientationRad;
 
 				const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
-					new THREE.Vector3(0, 0, 1), // Y-axis 
+					new THREE.Vector3(0, 0, 1), // Y-axis 0,1,0
 					adjustedYawRad 
 				); 
 				const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
-					new THREE.Vector3(1, 0, 0), // X-axis 
+					new THREE.Vector3(0, 1, 0), // X-axis 1,0,0
 					pitchRad 
 				);
 				const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
-					new THREE.Vector3(0, 1, 0), //Z-axis
+					new THREE.Vector3(1, 0, 0), //Z-axis  0,01
 					-rollRad
 				);
 
@@ -121,6 +121,7 @@
 		</script>	
 	</body>
 </html>
+
 
 
 
