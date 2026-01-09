@@ -22,7 +22,7 @@
 		<script type="module"> 
 			
 			import * as THREE from "three";
-			import * as VAX from "vax"; // Да се гледа в портретен режим, нямам време да оправям. 
+			import * as VAX from "vax"; 
 
 			VAX.init(animate);
 
@@ -42,7 +42,7 @@
 			function deviceOrientation(event)
 			{
 				console.log(event);
-				alpha = event.alpha.toFixed(1); temp because browser shit
+				alpha = event.alpha.toFixed(1);
 				beta = event.beta.toFixed(1);
 				gamma = event.gamma.toFixed(1);
 			}
@@ -123,6 +123,7 @@
 		</script>	
 	</body>
 </html>
+
 
 
 
