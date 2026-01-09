@@ -83,9 +83,10 @@
    					new THREE.Vector3(0, 0, 1),
     				-screenOrientationRad
   				);
-				const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion).multiply(screenQuaternion);
+				const finalQuaternion = deviceQuaternion.multiply(referenceQuaternion);
+				const finalfinalQuaternion.multiply(screenQuaternion);
 
-				VAX.camera.quaternion.copy(finalQuaternion);
+				VAX.camera.quaternion.copy(finalfinalQuaternion);
 			}
 			const material = new THREE.MeshPhysicalMaterial({
 				roughness: 0.15,
@@ -122,6 +123,7 @@
 		</script>	
 	</body>
 </html>
+
 
 
 
