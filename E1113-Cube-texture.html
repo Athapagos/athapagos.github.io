@@ -58,19 +58,20 @@
 				const screenOrientationRad = THREE.MathUtils.degToRad(screenOrientationDeg);
 
 				const adjustedYawRad = yawRad - screenOrientationRad; 
-				//const adjustedRowRad = rollRad - screenOrientationRad;
+				const adjustedPitchRad = pitchRad + screenOrientationRad;
+				const adjustedRollRad = rollRad - screenOrientationRad;
 
 				const quaternionYaw = new THREE.Quaternion().setFromAxisAngle(
-					new THREE.Vector3(0, 0, 1), // Y-axis 0,1,0
+					new THREE.Vector3(0, 1, 0), // Y-axis 0,1,0
 					adjustedYawRad 
 				); 
 				const quaternionPitch = new THREE.Quaternion().setFromAxisAngle(
-					new THREE.Vector3(0, 1, 0), // X-axis 1,0,0
-					pitchRad 
+					new THREE.Vector3(1, 0, 0), // X-axis 1,0,0
+					adjustedPitchRad 
 				);
 				const quaternionRoll = new THREE.Quaternion().setFromAxisAngle(
-					new THREE.Vector3(1, 0, 0), //Z-axis  0,01
-					-rollRad
+					new THREE.Vector3(0, 0, 1), //Z-axis  0,01
+					-adjustedRollRad
 				);
 
 				const deviceQuaternion = new THREE.Quaternion()
@@ -121,6 +122,7 @@
 		</script>	
 	</body>
 </html>
+
 
 
 
